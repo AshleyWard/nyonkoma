@@ -11,6 +11,11 @@ class GameScene extends Phaser.Scene {
     {
         this.load.spritesheet('cattus', './src/img/cattus-sheet.png', { frameWidth: 80, frameHeight: 100 }) ;  
         this.load.spritesheet('coin', './src/img/coin.png', { frameWidth: 32, frameHeight: 32 }) ;  
+        
+        this.load.image('desert', './src/img/desert.png') ;  
+        this.load.image('lake', './src/img/lake.png') ;  
+        this.load.image('mountain', './src/img/mountain.png') ;  
+        this.load.image('forest', './src/img/forest.png') ;  
     }
 
     create ()
@@ -105,35 +110,53 @@ class GameScene extends Phaser.Scene {
 
         gameState.characters        =   [gameState.cattus1, gameState.cattus2, gameState.cattus3, gameState.cattus4];
         //gameState.characters        =   this.add.group([gameState.cattus1, gameState.cattus2, gameState.cattus3, gameState.cattus4]);
+        //#endregion
+
+
+        //COINS
+        //#region
+        gameState.coins.collected = 0;
+        gameState.coins.display = this.add.text(30, 30, '');
+        gameState.coins.list = this.physics.add.group();
+        
+
+        gameState.coins.spawn = this.time.addEvent({
+            delay:      200,
+            loop:       true,
+            callback:   () => {
+
+                let coinCount = gameState.coins.list.getChildren().length;
+                if (coinCount < 10) {
+
+                    let worldInt = Math.floor(Math.random() * 4)
+                
+                    let coords = gameState.worlds.getRandomCoord(gameState.worlds.list[worldInt])
+                    
+                    let newCoin = gameState.coins.list.create(coords.x, coords.y, 'coin').setScale(0.5)
+                    newCoin.anims.play('coin-spin')
+                }
+            }
+        });
 
         
+        var coinCol = this.physics.add.overlap(gameState.characters, gameState.coins.list, (char, coin) => {
+            gameState.coins.collected++;
+            gameState.coins.display.text = gameState.coins.collected
+            coin.destroy();
+        });
+
         //#endregion
 
         //WORLD
         //#region
-        gameState.coins.list = this.physics.add.group();
-
-        gameState.coins.spawn = this.time.addEvent({
-            delay:      2000,
-            loop:       true,
-            callback:   () => {
-
-                let worldInt = Math.floor(Math.random() * 4)
-            
-                let coords = gameState.worlds.getRandomCoord(gameState.worlds.list[worldInt])
-                
-                let newCoin = gameState.coins.list.create(coords.x, coords.y, 'coin')
-                newCoin.anims.play('coin-spin')
-            }
-        });
-
-
         function generateWorlds(scene) {
             gameState.worlds.list.forEach( (world) => {
                 let bounds  =   world.coords;
                 let name    =   world.name;
 
-                let bg      =   scene.add.rectangle(bounds.left, bounds.top, bounds.right - bounds.left, bounds.bottom - bounds.top, 0x555491).setOrigin(0,0)
+                let bg      =   scene.add.image(bounds.left, bounds.top, world.name, 0x555491).setOrigin(0,0)
+
+                console.log(bg);
 
                 switch(world.name) {
                     case 'desert':
@@ -222,8 +245,6 @@ class GameScene extends Phaser.Scene {
         if (tab) {
             activateNextCharacter()
             player = gameState.currentCharacter
-
-            console.log(player)
         }
         
 
@@ -303,10 +324,21 @@ class GameScene extends Phaser.Scene {
             }
         }
         //#endregion
-
+        boxChecks(player);
 
         //CHARACTER
         //#region
+
+        function boxChecks(char) {
+            let padding = 30;
+            let vertDiff = 1.75
+            let bounds = gameState.worlds.active.coords;
+            
+            if (char.x > bounds.right - padding)            {char.x = bounds.right - padding}
+            if (char.x < bounds.left + padding)             {char.x = bounds.left + padding}
+            if (char.y > bounds.bottom - vertDiff*padding)  {char.y = bounds.bottom - vertDiff*padding}
+            if (char.y < bounds.top + vertDiff*padding)     {char.y = bounds.top + vertDiff*padding}
+        }
 
         function deactivate(char) {
             char.anims.play('cattus-inactive');
@@ -453,7 +485,7 @@ let gameState = {
 
 const config = {
   type: Phaser.AUTO,
-  backgroundColor: 0xffc836,
+  backgroundColor: 0x000000,
   width: 1200,
   height: 800,
   physics:  {
