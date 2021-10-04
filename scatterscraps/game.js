@@ -7,17 +7,19 @@ class GameScene extends Phaser.Scene {
 
     preload ()
     {	
-        this.load.spritesheet('sqrl', './src/img/SQORL.png', { frameWidth:48, frameHeight:48 } );  //48 x 48
-        this.load.spritesheet('acorn', './src/img/acorn.png', { frameWidth:48, frameHeight:48 } );  //48 x 48
-        this.load.spritesheet('ufo', './src/img/ufosheet.png', { frameWidth:48, frameHeight:96 } );  //48 x 48
-        this.load.image('ufoGuy', './src/img/ufoPopup.png') ;  //48 x 48
-        this.load.image('beam', './src/img/beam.png') ;  //8 x 1
-        this.load.image('beamHitbox', './src/img/beamHitbox.png') ;  //16 x 16
-        this.load.image('stump', './src/img/stump.png') ;  //48 x 48
-        this.load.image('shadow', './src/img/shadow.png') ;  //48 x 48
-        this.load.image('sapling', './src/img/sapling.png') ;  //48 x 48
-        this.load.image('youngling', './src/img/youngling.png') ;  //48 x 48
-        this.load.image('wholeling', './src/img/wholeling.png') ;  //48 x 48
+        let imgSrc = './scatterscraps/scraps/1/src/img/';
+
+        this.load.spritesheet('sqrl', imgSrc + 'SQORL.png', { frameWidth:48, frameHeight:48 } );  //48 x 48
+        this.load.spritesheet('acorn', imgSrc + 'acorn.png', { frameWidth:48, frameHeight:48 } );  //48 x 48
+        this.load.spritesheet('ufo', imgSrc + 'ufosheet.png', { frameWidth:48, frameHeight:96 } );  //48 x 48
+        this.load.image('ufoGuy', imgSrc + 'ufoPopup.png') ;  //48 x 48
+        this.load.image('beam', imgSrc + 'beam.png') ;  //8 x 1
+        this.load.image('beamHitbox', imgSrc + 'beamHitbox.png') ;  //16 x 16
+        this.load.image('stump', imgSrc + 'stump.png') ;  //48 x 48
+        this.load.image('shadow', imgSrc + 'shadow.png') ;  //48 x 48
+        this.load.image('sapling', imgSrc + 'sapling.png') ;  //48 x 48
+        this.load.image('youngling', imgSrc + 'youngling.png') ;  //48 x 48
+        this.load.image('wholeling', imgSrc + 'wholeling.png') ;  //48 x 48
     }
 
     create ()

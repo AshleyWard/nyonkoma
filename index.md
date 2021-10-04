@@ -8,6 +8,6 @@
 </head> 
 <body>
     <script src="./scatterscraps/lib/phaser.js"> </script>
-    <script src="./scatterscraps/1/src/js/game.js"> </script>
+    <script src="./scatterscraps/scraps/1/src/js/game.js"> </script>
 </body>
 </html>

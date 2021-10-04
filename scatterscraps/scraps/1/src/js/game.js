@@ -9,13 +9,15 @@ class GameScene extends Phaser.Scene {
 
     preload ()
     {
-        this.load.spritesheet('cattus', './src/img/cattus-sheet.png', { frameWidth: 80, frameHeight: 100 }) ;  
-        this.load.spritesheet('coin', './src/img/coin.png', { frameWidth: 32, frameHeight: 32 }) ;  
+        let imgSrc = './scatterscraps/scraps/1/src/img/';
+
+        this.load.spritesheet('cattus', imgSrc + 'cattus-sheet.png', { frameWidth: 80, frameHeight: 100 }) ;  
+        this.load.spritesheet('coin', imgSrc + 'coin.png', { frameWidth: 32, frameHeight: 32 }) ;  
         
-        this.load.image('desert', './src/img/desert.png') ;  
-        this.load.image('lake', './src/img/lake.png') ;  
-        this.load.image('mountain', './src/img/mountain.png') ;  
-        this.load.image('forest', './src/img/forest.png') ;  
+        this.load.image('desert', imgSrc + 'desert.png') ;  
+        this.load.image('lake', imgSrc + 'lake.png') ;  
+        this.load.image('mountain', imgSrc + 'mountain.png') ;  
+        this.load.image('forest', imgSrc + 'forest.png') ;  
     }
 
     create ()
