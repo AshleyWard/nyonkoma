@@ -5,10 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>1</title>
-    <script src="../../lib/phaser.js"> </script>
-    <script src="./src/js/game.js"> </script>
 </head> 
 <body>
-    
+    <script src="../../lib/phaser.js"> </script>
+    <script src="./src/js/game.js"> </script>
 </body>
 </html>
