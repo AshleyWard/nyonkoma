@@ -7,7 +7,6 @@ class GameScene extends Phaser.Scene {
 
     preload ()
     {	
-        let imgSrc = './scatterscraps/scraps/1/src/img/';
 
         this.load.spritesheet('sqrl', imgSrc + 'SQORL.png', { frameWidth:48, frameHeight:48 } );  //48 x 48
         this.load.spritesheet('acorn', imgSrc + 'acorn.png', { frameWidth:48, frameHeight:48 } );  //48 x 48

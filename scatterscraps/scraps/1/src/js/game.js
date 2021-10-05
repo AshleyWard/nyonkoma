@@ -11,7 +11,10 @@ class GameScene extends Phaser.Scene {
     {
         let imgSrc = './scatterscraps/scraps/1/src/img/';
 
-        this.load.spritesheet('cattus', imgSrc + 'cattus-sheet.png', { frameWidth: 80, frameHeight: 100 }) ;  
+        this.load.spritesheet('desertCat', imgSrc + 'cattus-sheet.png', { frameWidth: 80, frameHeight: 100 }) ;  
+        this.load.spritesheet('lakeCat', imgSrc + 'catpad-sheet.png', { frameWidth: 80, frameHeight: 100 }) ;  
+        this.load.spritesheet('forestCat', imgSrc + 'cattus-sheet.png', { frameWidth: 80, frameHeight: 100 }) ;  
+        this.load.spritesheet('mountainCat', imgSrc + 'cattus-sheet.png', { frameWidth: 80, frameHeight: 100 }) ;  
         this.load.spritesheet('coin', imgSrc + 'coin.png', { frameWidth: 32, frameHeight: 32 }) ;  
         
         this.load.image('desert', imgSrc + 'desert.png') ;  
@@ -25,30 +28,40 @@ class GameScene extends Phaser.Scene {
 
         //ANIMS
         //#region
-        this.anims.create({
-            key: 'cattus-inactive',
-            frames: this.anims.generateFrameNumbers('cattus', { frames: [6] }),
-            frameRate: 1,
-            repeat: 0
-        });
-        this.anims.create({
-            key: 'cattus-stand',
-            frames: this.anims.generateFrameNumbers('cattus', { frames: [0] }),
-            frameRate: 1,
-            repeat: 0
-        });
-        this.anims.create({
-            key: 'cattus-walk',
-            frames: this.anims.generateFrameNumbers('cattus', { frames: [4, 3, 2, 3] }),
-            frameRate: 15,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'cattus-run',
-            frames: this.anims.generateFrameNumbers('cattus', { frames: [4, 5, 4, 3, 2, 1, 2, 3] }),
-            frameRate: 30,
-            repeat: -1
-        });
+        //CATTUS
+
+        var setupAnims = (cat) => {
+
+            cat.animations = {};
+
+            cat.animations.inactive = this.anims.create({
+                key: cat.name + 'inactive',
+                frames: this.anims.generateFrameNumbers(cat.name + 'Cat', { frames: [6] }),
+                frameRate: 1,
+                repeat: 0
+            });
+            cat.animations.stand = this.anims.create({
+                key: cat.name + 'stand',
+                frames: this.anims.generateFrameNumbers(cat.name + 'Cat', { frames: [0] }),
+                frameRate: 1,
+                repeat: 0
+            });
+            cat.animations.walk = this.anims.create({
+                key: cat.name + 'walk',
+                frames: this.anims.generateFrameNumbers(cat.name + 'Cat', { frames: [4, 3, 2, 3] }),
+                frameRate: 15,
+                repeat: -1
+            });
+            cat.animations.run = this.anims.create({
+                key: cat.name + 'run',
+                frames: this.anims.generateFrameNumbers(cat.name + 'Cat', { frames: [4, 5, 4, 3, 2, 1, 2, 3] }),
+                frameRate: 30,
+                repeat: -1
+            });
+
+            console.log(cat.name + 'Cat:');
+            console.log(cat);
+        }
         
         this.anims.create({
             key: 'coin-spin',
@@ -56,7 +69,7 @@ class GameScene extends Phaser.Scene {
             frameRate: 6,
             repeat: -1
         });
-
+       
         //#endregion
 
         
@@ -66,44 +79,52 @@ class GameScene extends Phaser.Scene {
             cat.speed      = 100;
             cat.runMult    = 1;
             cat.active     = false;
-            
+
+            setupAnims(cat);
+
             cat.walk       = (o) => {
-                if (o.anims.getName() !== 'cattus-walk') {
-                    o.anims.play('cattus-walk');
+                if (o.anims.getName() !== o.name + 'walk') {
+                    o.anims.play(cat.animations.walk);
                 }
             }
 
             cat.run        = (o) => {
-                if (o.anims.getName() !== 'cattus-run') {
-                    o.anims.play('cattus-run');
+                if (o.anims.getName() !== o.name + 'run') {
+                    o.anims.play(cat.animations.run);
                 }
             };
+
+
+            console.log('1: ' + cat.texture.key);
+
+            console.log(cat.animations);
             
-            cat.anims.play('cattus-inactive');
+            cat.anims.play(cat.animations.inactive);
+
+            console.log('2: ' + cat.texture.key);
         }
         
 
         let worldCoords;
         
         worldCoords = gameState.worlds.getCenter(gameState.worlds.list[0]);
-        gameState.cattus1 = this.physics.add.sprite(worldCoords.x, worldCoords.y, 'cattus').setName('desert')
+        gameState.cattus1 = this.physics.add.sprite(worldCoords.x, worldCoords.y, 'desertCat').setName('desert')
         
         worldCoords = gameState.worlds.getCenter(gameState.worlds.list[1]);
-        gameState.cattus2 = this.physics.add.sprite(worldCoords.x, worldCoords.y, 'cattus').setName('lake')
+        gameState.cattus2 = this.physics.add.sprite(worldCoords.x, worldCoords.y, 'lakeCat').setName('lake')
         
         worldCoords = gameState.worlds.getCenter(gameState.worlds.list[2]);
-        gameState.cattus3 = this.physics.add.sprite(worldCoords.x, worldCoords.y, 'cattus').setName('forest')
+        gameState.cattus3 = this.physics.add.sprite(worldCoords.x, worldCoords.y, 'forestCat').setName('forest')
 
         worldCoords = gameState.worlds.getCenter(gameState.worlds.list[3]);
-        gameState.cattus4 = this.physics.add.sprite(worldCoords.x, worldCoords.y, 'cattus').setName('mountain')
-
+        gameState.cattus4 = this.physics.add.sprite(worldCoords.x, worldCoords.y, 'mountainCat').setName('mountain')
 
         setupCat(gameState.cattus1);
         setupCat(gameState.cattus2);
         setupCat(gameState.cattus3);
         setupCat(gameState.cattus4);
 
-        gameState.cattus1.anims.play('cattus-stand');
+        gameState.cattus1.anims.play(gameState.cattus1.animations.stand);
         gameState.cattus1.active    =   true;
 
         gameState.currentCharacter  =   gameState.cattus1
@@ -157,8 +178,6 @@ class GameScene extends Phaser.Scene {
                 let name    =   world.name;
 
                 let bg      =   scene.add.image(bounds.left, bounds.top, world.name, 0x555491).setOrigin(0,0)
-
-                console.log(bg);
 
                 switch(world.name) {
                     case 'desert':
@@ -313,7 +332,7 @@ class GameScene extends Phaser.Scene {
         //#region
         if (noVert) 
         {
-            player.setVelocityY(0);
+            player.setVelocityY(0); 
         }
         if (noHori) 
         {
@@ -321,8 +340,8 @@ class GameScene extends Phaser.Scene {
         }
         if (noDir) 
         {
-            if(player.anims.getName() !== 'cattus-stand') {
-                player.anims.play('cattus-stand');
+            if(player.anims.getName() !== 'stand') {
+                player.anims.play(player.animations.stand);
             }
         }
         //#endregion
@@ -343,7 +362,7 @@ class GameScene extends Phaser.Scene {
         }
 
         function deactivate(char) {
-            char.anims.play('cattus-inactive');
+            char.anims.play(player.animations.inactive);
             char.active = !char.active
             char.setVelocityX(0);
             char.setVelocityY(0);
