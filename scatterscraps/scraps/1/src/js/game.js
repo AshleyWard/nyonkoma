@@ -15,6 +15,7 @@ class GameScene extends Phaser.Scene {
         this.load.spritesheet('lakeCat', imgSrc + 'catpad-sheet.png', { frameWidth: 80, frameHeight: 100 }) ;  
         this.load.spritesheet('forestCat', imgSrc + 'cattus-sheet.png', { frameWidth: 80, frameHeight: 100 }) ;  
         this.load.spritesheet('mountainCat', imgSrc + 'cattus-sheet.png', { frameWidth: 80, frameHeight: 100 }) ;  
+        
         this.load.spritesheet('coin', imgSrc + 'coin.png', { frameWidth: 32, frameHeight: 32 }) ;  
         
         this.load.image('desert', imgSrc + 'desert.png') ;  
