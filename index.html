@@ -11,6 +11,6 @@
     <script src="./scatterscraps/scraps/1/src/js/game.js"> </script>
 	[Tab] - Switch cats<br>
 	[Shift] - Run<br>
-	[Arrow Keys]
+	[Arrow Keys]<br>
 </body>
 </html>
